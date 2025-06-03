@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - {{ user.username }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --text-color: #333;
+            --background-light: #f8f9fa;
+            --border-color: #ced4da;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-light);
+            margin: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #e2e6ea;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            padding: 20px;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .profile-container h2 {
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .profile-info {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            text-align: left;
+        }
+
+        .profile-info li {
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-info li:last-child {
+            border-bottom: none;
+        }
+
+        .profile-info strong {
+            color: var(--secondary-color);
+            flex-basis: 35%;
+        }
+
+        .profile-info span {
+            color: var(--text-color);
+            flex-basis: 60%;
+            text-align: right;
+            word-wrap: break-word;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #6c757d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .profile-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .profile-info li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-info strong, .profile-info span {
+                flex-basis: auto;
+                text-align: left;
+                width: 100%;
+            }
+
+            .profile-info span {
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>User Dashboard</h1>
+        <div>
+            <a href="/">Home</a>
+            {% comment %} <a href="{% url 'users:profile_update' %}">Edit Profile</a> {% endcomment %}
+            {% comment %} <a href="{% url 'logout' %}">Logout</a> {% endcomment %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="profile-container">
+            <h2>Welcome, {{ user.username }}!</h2>
+
+            <ul class="profile-info">
+                <li>
+                    <strong>Username:</strong>
+                    <span>{{ user.username }}</span>
+                </li>
+                {% if user.email %}
+                <li>
+                    <strong>Email:</strong>
+                    <span>{{ user.email }}</span>
+                </li>
+                {% endif %}
+                {% if user.first_name %}
+                <li>
+                    <strong>First Name:</strong>
+                    <span>{{ user.first_name }}</span>
+                </li>
+                {% endif %}
+                {% if user.last_name %}
+                <li>
+                    <strong>Last Name:</strong>
+                    <span>{{ user.last_name }}</span>
+                </li>
+                {% endif %}
+                {% if user.phone_number %}
+                <li>
+                    <strong>Phone:</strong>
+                    <span>{{ user.phone_number }}</span>
+                </li>
+                {% endif %}
+                <li>
+                    <strong>Account Created:</strong>
+                    <span>{{ user.date_joined|date:"F j, Y" }}</span>
+                </li>
+            </ul>
+
+            <!-- Optional button -->
+            {# <a href="{% url 'users:profile_update' %}" class="btn-secondary">Edit Profile</a> #}
+        </div>
+    </div>
+
+</body>
+</html>
